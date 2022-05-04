@@ -1,34 +1,10 @@
 import 'dart:io';
 
 class Intell {
-  static Future<String> createConf(String nom) async {
-    String cmd = 'nano /etc/apache2/sites-availables/$nom.conf';
-    await Process.run('bash', ['-c', cmd]);
-
+  static Future<ProcessResult> createConf(String nom) async {
     String ligne =
-        'echo "<VirtualHost *:80>" > /etc/apache2/sites-availables/$nom.conf';
-    await Process.run('bash', ['-c', ligne]);
-
-    ligne =
-        'echo "	ServerAdmin webmaster@localhost" >> /etc/apache2/sites-availables/$nom.conf';
-    await Process.run('bash', ['-c', ligne]);
-
-    ligne =
-        'echo "DocumentRoot /var/www/html" >> /etc/apache2/sites-availables/$nom.conf';
-    await Process.run('bash', ['-c', ligne]);
-
-    ligne =
-        'echo "ErrorLog \${APACHE_LOG_DIR}/error.log" >> /etc/apache2/sites-availables/$nom.conf';
-    await Process.run('bash', ['-c', ligne]);
-
-    ligne =
-        'echo "CustomLog \${APACHE_LOG_DIR}/access.log combined" >> /etc/apache2/sites-availables/$nom.conf';
-    await Process.run('bash', ['-c', ligne]);
-
-    ligne = 'echo "</VirtualHost>" >> /etc/apache2/sites-availables/$nom.conf';
-    await Process.run('bash', ['-c', ligne]);
-
-    String result = "Success !";
+        'echo -e "<VirtualHost *:80> \n    ServerAdmin webmaster@localhost \n    DocumentRoot /var/www/html \n    ErrorLog \${APACHE_LOG_DIR}/error.log \n    CustomLog \${APACHE_LOG_DIR}/access.log combined \n</VirtualHost>" > /etc/apache2/sites-available/$nom.conf';
+    ProcessResult result = await Process.run('bash', ['-c', ligne]);
     return result;
   }
 

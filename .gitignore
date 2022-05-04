@@ -1,6 +1,7 @@
 # Files and directories created by pub.
 .dart_tool/
 .packages
+.ssh
 
 # Conventional directory for build output.
 build/

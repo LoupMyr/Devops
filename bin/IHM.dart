@@ -120,7 +120,12 @@ class IHM {
 
   static Future<void> createConf() async {
     String nom = saisieString("le nom de la conf que vous souhaitez créer.");
-    Intell.createConf(nom);
+    print("Lancement...");
+    ProcessResult result = await Intell.createConf(nom);
+    print("Création terminé !");
+    print(result.stderr);
+    print(result.stdout);
+    sleep(const Duration(seconds: 2));
   }
 
   static Future<void> turnOnConf() async {
