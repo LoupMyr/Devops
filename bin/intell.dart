@@ -28,6 +28,24 @@ class Intell {
     return result;
   }
 
+  static Future<bool> verifyLnS() async {
+    bool valide = false;
+    String cmd = "ls /etc/pure-ftpd/auth/ | grep 60puredb";
+    ProcessResult result = await Process.run('bash', ['-c', cmd]);
+    print(result.stderr);
+    if (result.stdout != "") {
+      valide = true;
+    }
+    return valide;
+  }
+
+  static Future<ProcessResult> createLnS() async {
+    String cmd =
+        "sudo ln -s /etc/pure-ftpd/conf/PureDB /etc/pure-ftpd/auth/60puredb";
+    ProcessResult result = await Process.run('bash', ['-c', cmd]);
+    return result;
+  }
+
   static Future<void> createMapUser(String nom) async {}
 
   static Future<void> createUser(String nom) async {}
@@ -39,4 +57,36 @@ class Intell {
   static Future<void> banIP(String ip) async {}
 
   static Future<void> unbanIP(String ip) async {}
+
+  static Future<void> installApache() async {
+    String cmd = "sudo apt install apache2";
+    Process p = await Process.start('bash', ['-c', cmd]);
+    stdout.addStream(p.stdout);
+    stderr.addStream(p.stderr);
+    p.stdin.addStream(stdin);
+  }
+
+  static Future<void> installFtp() async {
+    String cmd = "sudo apt install pure-ftpd";
+    Process p = await Process.start('bash', ['-c', cmd]);
+    stdout.addStream(p.stdout);
+    stderr.addStream(p.stderr);
+    p.stdin.addStream(stdin);
+  }
+
+  static Future<void> installF2B() async {
+    String cmd = "sudo apt install fail2ban";
+    Process p = await Process.start('bash', ['-c', cmd]);
+    stdout.addStream(p.stdout);
+    stderr.addStream(p.stderr);
+    p.stdin.addStream(stdin);
+  }
+
+  static Future<void> installIpTables() async {
+    String cmd = "sudo apt install iptables";
+    Process p = await Process.start('bash', ['-c', cmd]);
+    stdout.addStream(p.stdout);
+    stderr.addStream(p.stderr);
+    p.stdin.addStream(stdin);
+  }
 }

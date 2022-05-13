@@ -51,14 +51,16 @@ class IHM {
     int nb = -1;
     while (nb != 0) {
       print(
-          "1. Modifier conf apache2\n2. Créer des utilisateurs\n3. Mettre en place la sécurité\n\n");
-      nb = saisiChoix(3);
+          "0. Quitter\n1. Modifier conf apache2\n2. Config de Pure-FTPD\n3. Mettre en place la sécurité\n4. Installer des services\n\n");
+      nb = saisiChoix(4);
       if (nb == 1) {
         await IHM.menuApache();
       } else if (nb == 2) {
         await IHM.menuUsers();
       } else if (nb == 3) {
         await IHM.menuSecu();
+      } else if (nb == 4) {
+        await IHM.menuInstall();
       }
     }
   }
@@ -68,7 +70,7 @@ class IHM {
     while (nb != 0) {
       print("\x1B[2J\x1B[0;0H");
       print(
-          "1. Créer une conf\n2. Modifier une conf\n3. Activer une conf\n4. Désactiver une conf\n5. Redémarrer apache2\n\n");
+          "0. Retour\n1. Créer une conf\n2. Modifier une conf\n3. Activer une conf\n4. Désactiver une conf\n5. Redémarrer apache2\n\n");
       nb = saisiChoix(5);
       if (nb == 1) {
         await IHM.createConf();
@@ -89,11 +91,15 @@ class IHM {
     while (nb != 0) {
       print("\x1B[2J\x1B[0;0H");
       print(
-          "1. Créer un utilisateur pour le mappage\n2. Créer un utilisateur virtuel\n\n");
-      nb = saisiChoix(2);
+          "0. Retour\n1. Vérifier l'éxistance de 60puredb\n2. Créer le lien symbolique \"60puredb\" \n3. Créer un utilisateur pour le mappage\n4. Créer un utilisateur virtuel\n\n");
+      nb = saisiChoix(4);
       if (nb == 1) {
-        await IHM.createMapUser();
+        await IHM.verifyLnS();
       } else if (nb == 2) {
+        await IHM.createLnS();
+      } else if (nb == 3) {
+        await IHM.createMapUser();
+      } else if (nb == 4) {
         await IHM.createUser();
       }
     }
@@ -104,7 +110,7 @@ class IHM {
     while (nb != 0) {
       print("\x1B[2J\x1B[0;0H");
       print(
-          "1. Mettre en place Fail2Ban \n2. Modifier les paramètres de Fail2Ban\n3. Bannir une IP précise\n4. Débannir une IP précise\n\n");
+          "0. Retour\n1. Mettre en place Fail2Ban \n2. Modifier les paramètres de Fail2Ban\n3. Bannir une IP précise\n4. Débannir une IP précise\n\n");
       nb = saisiChoix(4);
       if (nb == 1) {
         await IHM.startF2B();
@@ -114,6 +120,25 @@ class IHM {
         await IHM.banIP();
       } else if (nb == 4) {
         await IHM.unbanIP();
+      }
+    }
+  }
+
+  static Future<void> menuInstall() async {
+    int nb = -1;
+    while (nb != 0) {
+      print("\x1B[2J\x1B[0;0H");
+      print(
+          "0. Retour\n1. Installer apache2\n2. Installer Pure-FTPD\n3. Installer Fail2Ban\n4. Installer IpTables\n\n");
+      nb = saisiChoix(4);
+      if (nb == 1) {
+        await IHM.installApache();
+      } else if (nb == 2) {
+        await IHM.installFtp();
+      } else if (nb == 3) {
+        await IHM.installF2B();
+      } else if (nb == 4) {
+        await IHM.installIpTables();
       }
     }
   }
@@ -145,8 +170,34 @@ class IHM {
   }
 
   static Future<void> redemApache() async {
-    print("redémarrage en cours");
+    print("Redémarrage en cours...");
     Intell.redemApache();
+  }
+
+  static Future<void> verifyLnS() async {
+    print("Lancement de la vérification...");
+    sleep(const Duration(seconds: 2));
+    if (await Intell.verifyLnS()) {
+      print("Lien symbolique déjà existant");
+      sleep(const Duration(seconds: 5));
+    } else {
+      print("Lien symbolique pas encore créé");
+      sleep(const Duration(seconds: 5));
+    }
+  }
+
+  static Future<void> createLnS() async {
+    if (!await Intell.verifyLnS()) {
+      print("Création en cours...");
+      sleep(const Duration(seconds: 2));
+      ProcessResult result = await Intell.createLnS();
+      print("Création terminé !");
+      print(result.stderr);
+      print(result.stdout);
+      sleep(const Duration(seconds: 5));
+    } else {
+      print("Lien déjà existant");
+    }
   }
 
   static Future<void> createMapUser() async {
@@ -179,5 +230,37 @@ class IHM {
   static Future<void> unbanIP() async {
     String ip = saisieString("l'IP que vous souhaitez débannir.");
     Intell.unbanIP(ip);
+  }
+
+  static Future<void> installApache() async {
+    print("Lancement de l'instalation...");
+    sleep(const Duration(seconds: 2));
+    await Intell.installApache();
+    print("Instalation terminé !");
+    sleep(const Duration(seconds: 5));
+  }
+
+  static Future<void> installFtp() async {
+    print("Lancement de l'instalation...");
+    sleep(const Duration(seconds: 2));
+    await Intell.installFtp();
+    print("Instalation terminé !");
+    sleep(const Duration(seconds: 5));
+  }
+
+  static Future<void> installF2B() async {
+    print("Lancement de l'instalation...");
+    sleep(const Duration(seconds: 2));
+    await Intell.installF2B();
+    print("Instalation terminé !");
+    sleep(const Duration(seconds: 5));
+  }
+
+  static Future<void> installIpTables() async {
+    print("Lancement de l'instalation...");
+    sleep(const Duration(seconds: 2));
+    await Intell.installIpTables();
+    print("Instalation terminé !");
+    sleep(const Duration(seconds: 5));
   }
 }
