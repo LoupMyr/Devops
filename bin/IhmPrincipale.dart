@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'IhmApache.dart';
 import 'IhmFail2Ban.dart';
 import 'IhmFtp.dart';
@@ -65,7 +64,7 @@ class IhmPrincipale {
     return s;
   }
 
-  static Future<void> menu() async {
+  static Future<void> menuPrincipal() async {
     int nb = -1;
     while (nb != 0) {
       print(
@@ -74,9 +73,9 @@ class IhmPrincipale {
       if (nb == 1) {
         await IhmPrincipale.menuApache();
       } else if (nb == 2) {
-        await IhmPrincipale.menuUsers();
+        await IhmPrincipale.menuFtp();
       } else if (nb == 3) {
-        await IhmPrincipale.menuSecu();
+        await IhmPrincipale.menuSecurite();
       } else if (nb == 4) {
         await IhmPrincipale.menuInstall();
       }
@@ -104,7 +103,7 @@ class IhmPrincipale {
     }
   }
 
-  static Future<void> menuUsers() async {
+  static Future<void> menuFtp() async {
     int nb = -1;
     while (nb != 0) {
       print("\x1B[2J\x1B[0;0H");
@@ -123,7 +122,7 @@ class IhmPrincipale {
     }
   }
 
-  static Future<void> menuSecu() async {
+  static Future<void> menuSecurite() async {
     int nb = -1;
     while (nb != 0) {
       print("\x1B[2J\x1B[0;0H");

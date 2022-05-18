@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'IhmPrincipale.dart';
 import 'ProcessApache.dart';
 
@@ -30,7 +29,15 @@ class IhmApache {
   static Future<void> editConf() async {
     String nom = IhmPrincipale.saisieString(
         "le nom de la conf que vous souhaitez modifier.");
-    ProcessApache.editConf(nom);
+    String route = IhmPrincipale.saisieString(" le chemin du directory");
+    String directoryIndex =
+        IhmPrincipale.saisieString(" le nom du fichier comme index.");
+    String options =
+        IhmPrincipale.saisieString("les options que vous souhitez.");
+    String require = IhmPrincipale.saisieString(
+        "all granted, all denied ou 'ip [l'ip extacte]'.");
+
+    ProcessApache.editConf(nom, route, directoryIndex, options, require);
   }
 
   static Future<void> redemApache() async {

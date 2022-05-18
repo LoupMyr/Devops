@@ -1,12 +1,14 @@
 import 'dart:io';
-
 import 'IhmPrincipale.dart';
 import 'ProcessF2B.dart';
 
 class IhmF2B {
   static Future<void> startF2B() async {
     print("Lancement du service...");
-    ProcessF2B.startF2B();
+    sleep(const Duration(seconds: 2));
+    ProcessResult result = await ProcessF2B.startF2B();
+    print(result.stderr);
+    sleep(const Duration(seconds: 2));
   }
 
   static Future<void> printConf() async {
