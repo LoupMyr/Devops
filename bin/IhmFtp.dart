@@ -11,7 +11,7 @@ class IhmFtp {
       sleep(const Duration(seconds: 5));
     } else {
       print("Lien symbolique pas encore créé");
-      sleep(const Duration(seconds: 5));
+      sleep(const Duration(seconds: 2));
     }
   }
 
@@ -23,21 +23,34 @@ class IhmFtp {
       print("Création terminé !");
       print(result.stderr);
       print(result.stdout);
-      sleep(const Duration(seconds: 5));
+      sleep(const Duration(seconds: 2));
     } else {
       print("Lien déjà existant");
+      sleep(const Duration(seconds: 2));
     }
   }
 
   static Future<void> createMapUser() async {
     String nom = IhmPrincipale.saisieString(
-        "le nom d'utilisateur que vous souhaitez pour le mappage.");
-    ProcessFtp.createMapUser(nom);
+        "le nom d'utilisateur que vous souhaitez pour le mappage");
+    print("Création en cours...");
+    sleep(const Duration(seconds: 2));
+    Process result = await ProcessFtp.createMapUser(nom);
+    print(result.stdout);
+    print(result.stderr);
+    print("Création terminée");
+    sleep(const Duration(seconds: 2));
   }
 
   static Future<void> createUser() async {
     String nom = IhmPrincipale.saisieString(
-        "le nom d'utilisateur que vous souhaitez créer.");
-    ProcessFtp.createUser(nom);
+        "le nom d'utilisateur que vous souhaitez créer");
+    print("Création en cours...");
+    sleep(const Duration(seconds: 2));
+    Process result = await ProcessFtp.createUser(nom);
+    print(result.stdout);
+    print(result.stderr);
+    print("Création terminée");
+    sleep(const Duration(seconds: 2));
   }
 }

@@ -18,12 +18,18 @@ class IhmApache {
     String nom = IhmPrincipale.saisieString(
         "le nom de la conf que vous souhaitez activer.");
     ProcessApache.createConf(nom);
+    print("Conf activée avec succée");
+    sleep(const Duration(seconds: 2));
   }
 
   static Future<void> turnOffConf() async {
     String nom = IhmPrincipale.saisieString(
         "le nom de la conf que vous souhaitez désactiver.");
+    print("Création en cours...");
+    sleep(const Duration(seconds: 2));
     ProcessApache.createConf(nom);
+    print("Création terminée");
+    sleep(const Duration(seconds: 2));
   }
 
   static Future<void> editConf() async {
@@ -38,10 +44,13 @@ class IhmApache {
         "all granted, all denied ou 'ip [l'ip extacte]'.");
 
     ProcessApache.editConf(nom, route, directoryIndex, options, require);
+    print("Modifications appliquées");
+    sleep(const Duration(seconds: 2));
   }
 
   static Future<void> redemApache() async {
     print("Redémarrage en cours...");
+    sleep(const Duration(seconds: 2));
     ProcessApache.redemApache();
   }
 }

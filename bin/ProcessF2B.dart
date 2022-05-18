@@ -3,7 +3,7 @@ import 'dart:io';
 class ProcessF2B {
   static Future<ProcessResult> startF2B() async {
     String cmd =
-        'sudo touch /etc/fail2ban/jail.d/blacklist.conf | echo -e "[DEFAULT]\nbantime= 3600\nfindtime= 1800\nmaxretry= 3\n[pure-ftpd]\nenabled= true" > /etc/fail2ban/jail.d/blacklist.conf ';
+        'sudo touch /etc/fail2ban/jail.d/blacklist.conf | echo -e "[DEFAULT]\nbantime= 3600\nfindtime= 1800\nmaxretry= 3\n\n[pure-ftpd]\nenabled= true" > /etc/fail2ban/jail.d/blacklist.conf ';
     ProcessResult result = await Process.run('bash', ['-c', cmd]);
     String commande = "ipset create blacklist hash:net";
     await Process.run('bash', ['-c', commande]);
@@ -16,11 +16,12 @@ class ProcessF2B {
     return result;
   }
 
-  static Future<void> editF2B(
+  static Future<ProcessResult> editF2B(
       String bantime, String findtime, int maxretry) async {
     String cmd =
-        'echo -e "[DEFAULT]\nbantime = $bantime\nfindtime = $findtime\nmaxretry = $maxretry\n[pure-ftpd]\nenabled = true" > /etc/fail2ban/jail.d/blacklist.conf';
-    await Process.run('bash', ['-c', cmd]);
+        'echo -e "[DEFAULT]    bantime = $bantime    findtime = $findtime    maxretry = $maxretry    [pure-ftpd]   enabled = true" > /etc/fail2ban/jail.d/blacklist.conf';
+    ProcessResult result = await Process.run('bash', ['-c', cmd]);
+    return result;
   }
 
   static Future<ProcessResult> banIP(String ip) async {

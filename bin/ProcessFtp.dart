@@ -21,17 +21,24 @@ class ProcessFtp {
   }
 
   //Créé l'utilisateur sur lequel sera mapper tous les autres utilisateurs virtuels
-  static Future<void> createMapUser(String nom) async {
+  static Future<Process> createMapUser(String nom) async {
     String cmd = "adduser $nom";
     Process p = await Process.start('bash', ['-c', cmd]);
-    stdout.addStream(p.stdout);
-    stderr.addStream(p.stderr);
-    p.stdin.addStream(stdin);
+    while (p.exitCode != 0) {
+      print(p.stdout);
+      p.stdin.writeln();
+    }
+    return p;
   }
 
   //Créé un utilisateur virtuel
-  static Future<void> createUser(String nom) async {
+  static Future<Process> createUser(String nom) async {
     String cmd =
         "pure-pw useradd $nom -u 9999 -g 9999 -d /home/FTPUSER/$nom -m";
+    Process p = await Process.start('bash', ['-c', cmd]);
+    stdout.addStream(p.stdout);
+    stderr.addStream(p.stderr);
+    await p.stdin.addStream(stdin);
+    return p;
   }
 }
