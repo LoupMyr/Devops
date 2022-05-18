@@ -1,7 +1,7 @@
-import 'IHM.dart';
+import 'IhmPrincipale.dart';
 
 void main(List<String> arguments) async {
-  IHM.hello();
-  await IHM.menu();
-  IHM.goodbye();
+  IhmPrincipale.hello();
+  await IhmPrincipale.menu();
+  IhmPrincipale.goodbye();
 }
