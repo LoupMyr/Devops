@@ -3,6 +3,27 @@ import 'IhmPrincipale.dart';
 import 'ProcessF2B.dart';
 
 class IhmF2B {
+  static Future<void> menuSecurite() async {
+    int nb = -1;
+    while (nb != 0) {
+      print("\x1B[2J\x1B[0;0H");
+      print(
+          "0. Retour\n1. Mettre en place Fail2Ban \n2. Afficher la conf\n3. Modifier les paramètres de votre conf\n4. Bannir une IP précise\n5. Débannir une IP précise\n\n");
+      nb = IhmPrincipale.saisiChoix(5);
+      if (nb == 1) {
+        await IhmF2B.startF2B();
+      } else if (nb == 2) {
+        await IhmF2B.printConf();
+      } else if (nb == 3) {
+        await IhmF2B.editF2B();
+      } else if (nb == 4) {
+        await IhmF2B.banIP();
+      } else if (nb == 5) {
+        await IhmF2B.unbanIP();
+      }
+    }
+  }
+
   static Future<void> startF2B() async {
     print("Lancement du service...");
     sleep(const Duration(seconds: 2));
