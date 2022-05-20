@@ -18,8 +18,17 @@ class ProcessF2B {
 
   static Future<ProcessResult> editF2B(
       String bantime, String findtime, int maxretry) async {
-    String cmd =
-        'echo -e "[DEFAULT]    bantime = $bantime    findtime = $findtime    maxretry = $maxretry    [pure-ftpd]   enabled = true" > /etc/fail2ban/jail.d/blacklist.conf';
+    String cmd = "echo -e '[DEFAULT]" +
+        "\n" +
+        "bantime = $bantime" +
+        "\n" +
+        "findtime = $findtime" +
+        "\n" +
+        "maxretry = $maxretry" +
+        "\n\n" +
+        "[pure-ftpd]" +
+        "\n" +
+        "enabled = true' > /etc/fail2ban/jail.d/blacklist.conf";
     ProcessResult result = await Process.run('bash', ['-c', cmd]);
     return result;
   }

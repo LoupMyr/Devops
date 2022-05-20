@@ -30,72 +30,53 @@ class ProcessFtp {
   }
 
   //Créé un utilisateur virtuel
-  static Future<Process> createUser(String nom) async {
+  static Future<void> createUser(String nom, String mdp) async {
     String cmd =
         "pure-pw useradd $nom -u 9999 -g 9999 -d /home/FTPUSER/$nom -m";
     Process p = await Process.start('bash', ['-c', cmd]);
-    stdout.addStream(p.stdout);
-    stderr.addStream(p.stderr);
-    await p.stdin.addStream(stdin);
-    return p;
+    p.stdin.writeln(mdp);
+    p.stdin.writeln(mdp);
   }
 
-  static Future<Process> optionDl(String nom, double dl, double upl) async {
+  static Future<void> optionDl(
+      String nom, double dl, double upl, String mdp) async {
     String cmd = "pure-pw $nom -t $dl -T $upl -m";
     Process p = await Process.start('bash', ['-c', cmd]);
-    stdout.addStream(p.stdout);
-    stderr.addStream(p.stderr);
-    await p.stdin.addStream(stdin);
-    return p;
+    p.stdin.writeln(mdp);
   }
 
-  static Future<Process> optionMaxFiles(
-      String nom, int maxFiles, double maxMbytes) async {
+  static Future<void> optionMaxFiles(
+      String nom, int maxFiles, double maxMbytes, String mdp) async {
     String cmd = "pure-pw $nom -n $maxFiles -N $maxMbytes -m";
     Process p = await Process.start('bash', ['-c', cmd]);
-    stdout.addStream(p.stdout);
-    stderr.addStream(p.stderr);
-    await p.stdin.addStream(stdin);
-    return p;
+    p.stdin.writeln(mdp);
   }
 
-  static Future<Process> optionDlRatio(
-      String nom, double dl, double upl) async {
+  static Future<void> optionDlRatio(
+      String nom, double dl, double upl, String mdp) async {
     String cmd = "pure-pw $nom -q $dl -Q $upl -m";
     Process p = await Process.start('bash', ['-c', cmd]);
-    stdout.addStream(p.stdout);
-    stderr.addStream(p.stderr);
-    await p.stdin.addStream(stdin);
-    return p;
+    p.stdin.writeln(mdp);
   }
 
-  static Future<Process> optionAllowIpClient(
-      String nom, String allowIp, String denyIp) async {
+  static Future<void> optionAllowIpClient(
+      String nom, String allowIp, String denyIp, String mdp) async {
     String cmd = "pure-pw $nom -r $allowIp -R $denyIp -m";
     Process p = await Process.start('bash', ['-c', cmd]);
-    stdout.addStream(p.stdout);
-    stderr.addStream(p.stderr);
-    await p.stdin.addStream(stdin);
-    return p;
+    p.stdin.writeln(mdp);
   }
 
-  static Future<Process> optionAllowIpLocale(
-      String nom, String allowIp, String denyIp) async {
+  static Future<void> optionAllowIpLocale(
+      String nom, String allowIp, String denyIp, String mdp) async {
     String cmd = "pure-pw $nom -i $allowIp -I $denyIp -m";
     Process p = await Process.start('bash', ['-c', cmd]);
-    stdout.addStream(p.stdout);
-    stderr.addStream(p.stderr);
-    await p.stdin.addStream(stdin);
-    return p;
+    p.stdin.writeln(mdp);
   }
 
-  static Future<Process> optionHeure(
-      String nom, String debut, String fin) async {
+  static Future<void> optionHeure(
+      String nom, String debut, String fin, String mdp) async {
     String cmd = "pure-pw $nom -z $debut-$fin -m";
     Process p = await Process.start('bash', ['-c', cmd]);
-    stdout.addStream(p.stdout);
-    stderr.addStream(p.stderr);
-    await p.stdin.addStream(stdin);
-    return p;
+    p.stdin.writeln(mdp);
   }
 }

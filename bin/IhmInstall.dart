@@ -8,8 +8,8 @@ class IhmInstall {
     while (nb != 0) {
       print("\x1B[2J\x1B[0;0H");
       print(
-          "0. Retour\n1. Installer apache2\n2. Installer Pure-FTPD\n3. Installer Fail2Ban\n4. Installer IpTables\n\n");
-      nb = IhmPrincipale.saisiChoix(4);
+          "0. Retour\n1. Installer apache2\n2. Installer Pure-FTPD\n3. Installer Fail2Ban\n4. Installer IpTables\n5. Installer Ipset\n\n");
+      nb = IhmPrincipale.saisiChoix(5);
       if (nb == 1) {
         await IhmInstall.installApache();
       } else if (nb == 2) {
@@ -18,6 +18,8 @@ class IhmInstall {
         await IhmInstall.installF2B();
       } else if (nb == 4) {
         await IhmInstall.installIpTables();
+      } else if (nb == 5) {
+        await IhmInstall.installIpset();
       }
     }
   }
@@ -50,6 +52,14 @@ class IhmInstall {
     print("Lancement de l'instalation...");
     sleep(const Duration(seconds: 2));
     await ProcessInstall.installIpTables();
+    print("Instalation terminé !");
+    sleep(const Duration(seconds: 5));
+  }
+
+  static Future<void> installIpset() async {
+    print("Lancement de l'instalation...");
+    sleep(const Duration(seconds: 2));
+    await ProcessInstall.installIpSet();
     print("Instalation terminé !");
     sleep(const Duration(seconds: 5));
   }

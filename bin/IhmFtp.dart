@@ -89,11 +89,10 @@ class IhmFtp {
   static Future<void> createUser() async {
     String nom = IhmPrincipale.saisieString(
         "le nom d'utilisateur que vous souhaitez créer");
+    String mdp = IhmPrincipale.saisieString("le mdp");
     print("Création en cours...");
     sleep(const Duration(seconds: 2));
-    Process result = await ProcessFtp.createUser(nom);
-    print(result.stdout);
-    print(result.stderr);
+    await ProcessFtp.createUser(nom, mdp);
     print("Création terminée");
     sleep(const Duration(seconds: 2));
   }
@@ -107,11 +106,10 @@ class IhmFtp {
     double upl = double.parse(
         IhmPrincipale.saisieInt("la bande passante pour cet utilisateur")
             .toString());
+    String mdp = IhmPrincipale.saisieString("le mdp");
     print("Création en cours...");
     sleep(const Duration(seconds: 2));
-    Process result = await ProcessFtp.optionDl(nom, dl, upl);
-    print(result.stdout);
-    print(result.stderr);
+    await ProcessFtp.optionDl(nom, dl, upl, mdp);
     print("Création terminée");
     sleep(const Duration(seconds: 2));
   }
@@ -124,11 +122,10 @@ class IhmFtp {
     double maxMbytes = double.parse(
         IhmPrincipale.saisieInt("la bande passante max pour cet utilisateur")
             .toString());
+    String mdp = IhmPrincipale.saisieString("le mdp");
     print("Création en cours...");
     sleep(const Duration(seconds: 2));
-    Process result = await ProcessFtp.optionMaxFiles(nom, maxFiles, maxMbytes);
-    print(result.stdout);
-    print(result.stderr);
+    ProcessFtp.optionMaxFiles(nom, maxFiles, maxMbytes, mdp);
     print("Création terminée");
     sleep(const Duration(seconds: 2));
   }
@@ -142,11 +139,10 @@ class IhmFtp {
     double upl = double.parse(
         IhmPrincipale.saisieInt("le upload ratio pour cet utilisateur")
             .toString());
+    String mdp = IhmPrincipale.saisieString("le mdp");
     print("Création en cours...");
     sleep(const Duration(seconds: 2));
-    Process result = await ProcessFtp.optionDlRatio(nom, dl, upl);
-    print(result.stdout);
-    print(result.stderr);
+    await ProcessFtp.optionDlRatio(nom, dl, upl, mdp);
     print("Création terminée");
     sleep(const Duration(seconds: 2));
   }
@@ -158,11 +154,10 @@ class IhmFtp {
         IhmPrincipale.saisieString("l'IP que vous souhaitez autoriser");
     String denyIp =
         IhmPrincipale.saisieString("l'IP que vous souhaitez bloquer");
+    String mdp = IhmPrincipale.saisieString("le mdp");
     print("Création en cours...");
     sleep(const Duration(seconds: 2));
-    Process result = await ProcessFtp.optionAllowIpClient(nom, allowIp, denyIp);
-    print(result.stdout);
-    print(result.stderr);
+    await ProcessFtp.optionAllowIpClient(nom, allowIp, denyIp, mdp);
     print("Création terminée");
     sleep(const Duration(seconds: 2));
   }
@@ -174,11 +169,10 @@ class IhmFtp {
         IhmPrincipale.saisieString("l'IP que vous souhaitez autoriser");
     String denyIp =
         IhmPrincipale.saisieString("l'IP que vous souhaitez bloquer");
+    String mdp = IhmPrincipale.saisieString("le mdp");
     print("Création en cours...");
     sleep(const Duration(seconds: 2));
-    Process result = await ProcessFtp.optionAllowIpLocale(nom, allowIp, denyIp);
-    print(result.stdout);
-    print(result.stderr);
+    await ProcessFtp.optionAllowIpLocale(nom, allowIp, denyIp, mdp);
     print("Création terminée");
     sleep(const Duration(seconds: 2));
   }
@@ -188,11 +182,10 @@ class IhmFtp {
         "le nom d'utilisateur que vous souhaitez restreindre");
     String debut = IhmPrincipale.saisieString("l'heure de début");
     String fin = IhmPrincipale.saisieString("l'heure de fin");
+    String mdp = IhmPrincipale.saisieString("le mdp");
     print("Création en cours...");
     sleep(const Duration(seconds: 2));
-    Process result = await ProcessFtp.optionHeure(nom, debut, fin);
-    print(result.stdout);
-    print(result.stderr);
+    await ProcessFtp.optionHeure(nom, debut, fin, mdp);
     print("Création terminée");
     sleep(const Duration(seconds: 2));
   }
