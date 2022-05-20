@@ -77,9 +77,10 @@ class IhmFtp {
   static Future<void> createMapUser() async {
     String nom = IhmPrincipale.saisieString(
         "le nom d'utilisateur que vous souhaitez pour le mappage");
+    String mdp = IhmPrincipale.saisieMDP();
     print("Création en cours...");
     sleep(const Duration(seconds: 2));
-    Process result = await ProcessFtp.createMapUser(nom);
+    Process result = await ProcessFtp.createMapUser(nom, mdp);
     print(result.stdout);
     print(result.stderr);
     print("Création terminée");
@@ -89,7 +90,7 @@ class IhmFtp {
   static Future<void> createUser() async {
     String nom = IhmPrincipale.saisieString(
         "le nom d'utilisateur que vous souhaitez créer");
-    String mdp = IhmPrincipale.saisieString("le mdp");
+    String mdp = IhmPrincipale.saisieMDP();
     print("Création en cours...");
     sleep(const Duration(seconds: 2));
     await ProcessFtp.createUser(nom, mdp);
@@ -106,7 +107,7 @@ class IhmFtp {
     double upl = double.parse(
         IhmPrincipale.saisieInt("la bande passante pour cet utilisateur")
             .toString());
-    String mdp = IhmPrincipale.saisieString("le mdp");
+    String mdp = IhmPrincipale.saisieMDP();
     print("Création en cours...");
     sleep(const Duration(seconds: 2));
     await ProcessFtp.optionDl(nom, dl, upl, mdp);
@@ -122,7 +123,7 @@ class IhmFtp {
     double maxMbytes = double.parse(
         IhmPrincipale.saisieInt("la bande passante max pour cet utilisateur")
             .toString());
-    String mdp = IhmPrincipale.saisieString("le mdp");
+    String mdp = IhmPrincipale.saisieMDP();
     print("Création en cours...");
     sleep(const Duration(seconds: 2));
     ProcessFtp.optionMaxFiles(nom, maxFiles, maxMbytes, mdp);
@@ -139,7 +140,7 @@ class IhmFtp {
     double upl = double.parse(
         IhmPrincipale.saisieInt("le upload ratio pour cet utilisateur")
             .toString());
-    String mdp = IhmPrincipale.saisieString("le mdp");
+    String mdp = IhmPrincipale.saisieMDP();
     print("Création en cours...");
     sleep(const Duration(seconds: 2));
     await ProcessFtp.optionDlRatio(nom, dl, upl, mdp);
@@ -154,7 +155,7 @@ class IhmFtp {
         IhmPrincipale.saisieString("l'IP que vous souhaitez autoriser");
     String denyIp =
         IhmPrincipale.saisieString("l'IP que vous souhaitez bloquer");
-    String mdp = IhmPrincipale.saisieString("le mdp");
+    String mdp = IhmPrincipale.saisieMDP();
     print("Création en cours...");
     sleep(const Duration(seconds: 2));
     await ProcessFtp.optionAllowIpClient(nom, allowIp, denyIp, mdp);
@@ -169,7 +170,7 @@ class IhmFtp {
         IhmPrincipale.saisieString("l'IP que vous souhaitez autoriser");
     String denyIp =
         IhmPrincipale.saisieString("l'IP que vous souhaitez bloquer");
-    String mdp = IhmPrincipale.saisieString("le mdp");
+    String mdp = IhmPrincipale.saisieMDP();
     print("Création en cours...");
     sleep(const Duration(seconds: 2));
     await ProcessFtp.optionAllowIpLocale(nom, allowIp, denyIp, mdp);
@@ -182,7 +183,7 @@ class IhmFtp {
         "le nom d'utilisateur que vous souhaitez restreindre");
     String debut = IhmPrincipale.saisieString("l'heure de début");
     String fin = IhmPrincipale.saisieString("l'heure de fin");
-    String mdp = IhmPrincipale.saisieString("le mdp");
+    String mdp = IhmPrincipale.saisieMDP();
     print("Création en cours...");
     sleep(const Duration(seconds: 2));
     await ProcessFtp.optionHeure(nom, debut, fin, mdp);

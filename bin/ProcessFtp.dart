@@ -1,5 +1,7 @@
 import 'dart:io';
 
+import 'dart:math';
+
 class ProcessFtp {
   static Future<bool> verifyLnS() async {
     bool valide = false;
@@ -21,21 +23,48 @@ class ProcessFtp {
   }
 
   //Créé l'utilisateur sur lequel sera mapper tous les autres utilisateurs virtuels
-  static Future<Process> createMapUser(String nom) async {
+  static Future<Process> createMapUser(String nom, String mdp) async {
     String cmd = "adduser $nom";
     Process p = await Process.start('bash', ['-c', cmd]);
-    print(p.stdout);
-    p.stdin.writeln();
+    p.stdin.writeln(mdp);
+    p.stdin.writeln(mdp);
+    p.stdin.writeln("");
+    p.stdin.writeln("");
+    p.stdin.writeln("");
+    p.stdin.writeln("");
+    p.stdin.writeln("");
+    p.stdin.writeln("");
     return p;
+  }
+
+  static Future<bool> userExist(String nom) async {
+    bool exist = true;
+    String cmd = "id $nom";
+    Process p = await Process.start('bash', ['-c', cmd]);
+    if (p.stderr != "") {
+      exist = false;
+    }
+    return exist;
+  }
+
+  static Future<int> getId(String nom) async {
+    int uid = 0;
+    String cmd = "grep $nom /etc/passwd | cut -d ':' -f3";
+    Process p = await Process.start('bash', ['-c', cmd]);
+    uid = int.parse(p.stdout.toString());
+    return uid;
   }
 
   //Créé un utilisateur virtuel
   static Future<void> createUser(String nom, String mdp) async {
-    String cmd =
-        "pure-pw useradd $nom -u 9999 -g 9999 -d /home/FTPUSER/$nom -m";
-    Process p = await Process.start('bash', ['-c', cmd]);
-    p.stdin.writeln(mdp);
-    p.stdin.writeln(mdp);
+    if (await userExist(nom)) {
+      int id = await getId(nom);
+      String cmd =
+          "pure-pw useradd $nom -u $id -g $id -d /home/FTPUSER/$nom -m";
+      Process p = await Process.start('bash', ['-c', cmd]);
+      p.stdin.writeln(mdp);
+      p.stdin.writeln(mdp);
+    }
   }
 
   static Future<void> optionDl(

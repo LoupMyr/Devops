@@ -64,6 +64,23 @@ class IhmPrincipale {
     return s;
   }
 
+  static String saisieMDP() {
+    bool saisieValide = false;
+    String s = "";
+    while (!saisieValide) {
+      print("> Veuillez saisir le mot de passe :");
+      try {
+        stdin.echoMode = false;
+        s = stdin.readLineSync().toString();
+        saisieValide = true;
+        stdin.echoMode = true;
+      } catch (e) {
+        print("Erreur dans la saisie.");
+      }
+    }
+    return s;
+  }
+
   static Future<void> menuPrincipal() async {
     int nb = -1;
     while (nb != 0) {

@@ -27,8 +27,8 @@ class IhmF2B {
   static Future<void> startF2B() async {
     print("Lancement du service...");
     sleep(const Duration(seconds: 2));
-    ProcessResult result = await ProcessF2B.startF2B();
-    print(result.stderr);
+    await ProcessF2B.startF2B();
+    print("Mise en place effectuée");
     sleep(const Duration(seconds: 2));
   }
 
@@ -36,7 +36,6 @@ class IhmF2B {
     print("Affichage en cours...");
     ProcessResult result = await ProcessF2B.getConf();
     print(result.stdout);
-
     sleep(const Duration(seconds: 5));
   }
 
@@ -44,11 +43,8 @@ class IhmF2B {
     String bantime = IhmPrincipale.saisieString("le temps de ban");
     String findtime = IhmPrincipale.saisieString("le temps de findtime");
     int maxretry = IhmPrincipale.saisieInt("le nombre de tentatives possibles");
-    ProcessResult result =
-        await ProcessF2B.editF2B(bantime, findtime, maxretry);
-    print("Modifications appliquées avec succé");
-    print(result.stdout);
-    print(result.stderr);
+    await ProcessF2B.editF2B(bantime, findtime, maxretry);
+    print("Modifications appliquées avec succès");
     sleep(const Duration(seconds: 2));
   }
 
